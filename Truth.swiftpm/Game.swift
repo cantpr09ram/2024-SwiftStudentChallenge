@@ -9,31 +9,42 @@ import SwiftUI
 
 struct Game: View {
     @State private var newModel: Model = Model()
-    @State private var isFinished: Bool = false
+    @State private var gameState: GameState = .initial
+    @State private var num: Int = 0
+    @State private var sheetIsPresented: Bool = false
     
     var body: some View {
         VStack {
-            NavigationView {
-                List {
-                    ForEach(newModel.messanges) { messange in
-                        VStack(alignment: .leading, spacing: 10) {
-                            Text(messange.name)
-                            Text(messange.messange)
-                        }
-                    }
-                }
-            }
-            if isFinished == false {
-                Messange(isFinished: isFinished) { updatedPost in
-                    // 处理更新后的数据
-                    self.newModel.messanges.append(updatedPost)
-                }
-                .padding()
+            if gameState == .initial {
+                InitialView(original: $newModel.original, num: $num, gameState: $gameState)
+            }else if (gameState == .post){
+                //Text("post")
+                NewPostView(original: $newModel, num: $num, gameState: $gameState)
+            }else if gameState == .rate {
+                //Text("rate")
+                RatingView(original: $newModel, num: $num, gameState: $gameState, sheetIsPresented: $sheetIsPresented)
+            }else{
+                Text("something wrong")
             }
         }
+        .sheet(isPresented: $sheetIsPresented, content: {
+            Result(Data: $newModel.messanges)
+                .onAppear {
+                    gameState = .initial
+                }
+            })
     }
+}
+
+enum GameState {
+    case initial
+    case post
+    case rate
 }
 
 #Preview {
     Game()
 }
+//gameState: $gameState
+//InitialView(original: $newModel.original, num: $num, isFinished: $isFinished)
+//NewPostView(original: $newModel, num: $num, isFinished: $isFinished)

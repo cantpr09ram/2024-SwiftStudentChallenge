@@ -10,6 +10,7 @@ import SwiftUI
 struct Model: Identifiable {
     var id: UUID = UUID()
     var original: String = ""
+    var original_pic: UIImage?
     var score: Double = 0
     var messanges: [Post] = []
 }
@@ -19,4 +20,6 @@ struct Post: Identifiable {
     var num: Int = 0
     var name: String = ""
     var messange: String = ""
+    var score: Int = 0
+    var isRate: Bool = false
 }
