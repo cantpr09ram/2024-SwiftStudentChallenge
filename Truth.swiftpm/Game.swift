@@ -16,7 +16,7 @@ struct Game: View {
     var body: some View {
         VStack {
             if gameState == .initial {
-                InitialView(original: $newModel.original, num: $num, gameState: $gameState)
+                InitialView(original: $newModel, num: $num, gameState: $gameState)
             }else if (gameState == .post){
                 //Text("post")
                 NewPostView(original: $newModel, num: $num, gameState: $gameState)

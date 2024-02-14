@@ -19,11 +19,19 @@ struct NewPostView: View {
     var body: some View {
         VStack(spacing: 10) {
             if num == 1 {
-                Text(original.original)
-                    .font(.body)
-                    .multilineTextAlignment(.leading)
-                    .background(Color.gray.opacity(0.2))
-                    .padding()
+                if (original.Mode == .text) {
+                    Text(original.original)
+                        .font(.body)
+                        .multilineTextAlignment(.leading)
+                        .background(Color.gray.opacity(0.2))
+                        .padding()
+                } else {
+                    original.original_pic
+                        .resizable()
+                        .scaledToFit()
+                        .clipped()
+                }
+                
             } else {
                 let lenOfMessange = original.messanges.count - 1
                 let randomNumber = Int.random(in: 0...lenOfMessange)

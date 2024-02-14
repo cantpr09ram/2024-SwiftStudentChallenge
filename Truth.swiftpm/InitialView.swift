@@ -6,12 +6,15 @@
 //
 
 import SwiftUI
+import PhotosUI
 
 struct InitialView: View {
-    @Binding var original: String
+    @Binding var original: Model
     @Binding var num: Int
     @Binding var gameState: GameState
     
+    @State private var selectedItem: PhotosPickerItem?
+    @State private var selectedPhotoData: Data?
     @State private var messageText: String = ""
     @State private var userMode: Mode = .Default
     // for sliding Effect
@@ -45,6 +48,7 @@ struct InitialView: View {
                         .contentShape(.rect)
                         .onTapGesture {
                             userMode = mode
+                            original.Mode = userMode
                         }
                 }
             }
@@ -53,11 +57,39 @@ struct InitialView: View {
             .padding(.top, 20)
             
             if userMode == .Default {
-                Text("using default mode")
+                original.original_pic
+                    .resizable()
+                    .scaledToFit()
+                    .clipped()
                     .frame(height: 530)
             } else if  userMode == .img{
-                Text("upload image from photo app")
-                    .frame(height: 530)
+                ZStack {
+                    if let selectedPhotoData,
+                        let image = UIImage(data: selectedPhotoData) {
+
+                        Image(uiImage: image)
+                            .resizable()
+                            .scaledToFit()
+                            .clipped()
+
+                    }
+                    
+                    PhotosPicker(selection: $selectedItem, matching: .any(of: [.images, .not(.livePhotos)])) {
+                        Label("Select a photo", systemImage: "photo")
+                    }
+                    .tint(.purple)
+                    .controlSize(.large)
+                    .buttonStyle(.borderedProminent)
+                    .onChange(of: selectedItem) { newItem in
+                        Task {
+                            if let data = try? await newItem?.loadTransferable(type: Data.self) {
+                                selectedPhotoData = data
+                            }
+                        }
+                    }
+                   
+                }
+                .frame(height: 530)
             } else {
                 TextEditor(text: $messageText)
                     .frame(height: 500)
@@ -66,9 +98,13 @@ struct InitialView: View {
 
             Button("Start") {
                 gameState = .post
-                original = messageText
                 num += 1
                 messageText = ""
+                if original.Mode == .text {
+                    original.original = messageText
+                } else if (original.Mode == .img) {
+                    original.original_pic = Image(uiImage: UIImage(data: selectedPhotoData!)!)
+                }
             }
             .font(.title)
             .fontWeight(.bold)

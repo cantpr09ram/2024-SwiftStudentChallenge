@@ -28,7 +28,19 @@ struct RatingView: View {
                     Text("Original")
                         .font(.title3.bold())
                         .frame(alignment: .leading)
-                    Text(original.original)
+                    
+                    if (original.Mode == .text) {
+                        Text(original.original)
+                            .font(.body)
+                            .multilineTextAlignment(.leading)
+                            .background(Color.gray.opacity(0.2))
+                            .padding()
+                    } else {
+                        original.original_pic
+                            .resizable()
+                            .scaledToFit()
+                            .clipped()
+                    }
                 }
                 .padding()
             }
@@ -108,6 +120,7 @@ struct RatingView: View {
                 .font(.title)
                 .fontWeight(.bold)
                 .padding()
+                .disabled(num != 1)
             }
         }
     }
