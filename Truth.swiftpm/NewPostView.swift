@@ -36,7 +36,18 @@ struct NewPostView: View {
                 let lenOfMessange = original.messanges.count - 1
                 let randomNumber = Int.random(in: 0...lenOfMessange)
                 if randomNumber == 0 {
-                    Text(original.original)
+                    if (original.Mode == .text) {
+                        Text(original.original)
+                            .font(.body)
+                            .multilineTextAlignment(.leading)
+                            .background(Color.gray.opacity(0.2))
+                            .padding()
+                    } else {
+                        original.original_pic
+                            .resizable()
+                            .scaledToFit()
+                            .clipped()
+                    }
                 } else {
                     let selectedMessange = original.messanges[randomNumber].messange
                     Text(selectedMessange)
@@ -47,7 +58,6 @@ struct NewPostView: View {
                     .font(.title)
                     .fontWeight(.bold)
                     .padding(10)
-                TextField("enter your name", text: $name)
             }
             .padding()
 

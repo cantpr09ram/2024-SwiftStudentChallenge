@@ -15,6 +15,7 @@ struct RatingView: View {
     
     @State private var userScore: Score = .completelyFake
     @State private var randomNumber: Int?
+    @State private var test: String = ""
     @Namespace private var animation
     
     

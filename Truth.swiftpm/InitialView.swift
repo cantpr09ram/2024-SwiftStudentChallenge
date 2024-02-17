@@ -98,20 +98,22 @@ struct InitialView: View {
 
             Button("Start") {
                 gameState = .post
-                num += 1
-                messageText = ""
+                
                 if original.Mode == .text {
                     original.original = messageText
                 } else if (original.Mode == .img) {
                     original.original_pic = Image(uiImage: UIImage(data: selectedPhotoData!)!)
                 }
+                
+                num += 1
+                messageText = ""
             }
             .font(.title)
             .fontWeight(.bold)
             .padding()
         }
         //.frame(maxWidth: .infinity, maxHeight: .infinity)
-        .frame(width: 900, height: 910)
+        .frame(width: 900, height: 970)
         .padding(10)
         .background(Color.gray.opacity(0.15))
         .cornerRadius(20)
