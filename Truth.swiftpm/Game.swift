@@ -28,7 +28,7 @@ struct Game: View {
             }
         }
         .sheet(isPresented: $sheetIsPresented, content: {
-            Result(Data: $newModel.messanges)
+            Result(original: $newModel)
                 .onAppear {
                     gameState = .initial
                 }

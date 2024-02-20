@@ -61,39 +61,46 @@ struct InitialView: View {
                     .resizable()
                     .scaledToFit()
                     .clipped()
-                    .frame(height: 530)
+                    .frame(height: 550)
             } else if  userMode == .img{
-                ZStack {
-                    if let selectedPhotoData,
-                        let image = UIImage(data: selectedPhotoData) {
+                VStack {
+                    //Text("Input news clip text to start game")
+                    ZStack {
+                        if let selectedPhotoData,
+                            let image = UIImage(data: selectedPhotoData) {
 
-                        Image(uiImage: image)
-                            .resizable()
-                            .scaledToFit()
-                            .clipped()
+                            Image(uiImage: image)
+                                .resizable()
+                                .scaledToFit()
+                                .clipped()
 
-                    }
-                    
-                    PhotosPicker(selection: $selectedItem, matching: .any(of: [.images, .not(.livePhotos)])) {
-                        Label("Select a photo", systemImage: "photo")
-                    }
-                    .tint(.purple)
-                    .controlSize(.large)
-                    .buttonStyle(.borderedProminent)
-                    .onChange(of: selectedItem) { newItem in
-                        Task {
-                            if let data = try? await newItem?.loadTransferable(type: Data.self) {
-                                selectedPhotoData = data
+                        }
+                        
+                        PhotosPicker(selection: $selectedItem, matching: .any(of: [.images, .not(.livePhotos)])) {
+                            Label("Select a photo", systemImage: "photo")
+                        }
+                        .tint(.purple)
+                        .controlSize(.large)
+                        .buttonStyle(.borderedProminent)
+                        .onChange(of: selectedItem) { newItem in
+                            Task {
+                                if let data = try? await newItem?.loadTransferable(type: Data.self) {
+                                    selectedPhotoData = data
+                                }
                             }
                         }
+                       
                     }
-                   
+                    .frame(height: 530)
                 }
-                .frame(height: 530)
             } else {
+                //Text("Input news clip text to start game")
+                //    .font(.title3)
                 TextEditor(text: $messageText)
-                    .frame(height: 500)
-                    .padding(20)
+                    .frame(height: 520)
+                    .padding(5)
+                    .background(.gray.opacity(0.15))
+                    
             }
 
             Button("Start") {
@@ -111,11 +118,11 @@ struct InitialView: View {
             .font(.title)
             .fontWeight(.bold)
             .padding()
+            .tint(.purple)
         }
         //.frame(maxWidth: .infinity, maxHeight: .infinity)
         .frame(width: 900, height: 970)
         .padding(10)
-        .background(Color.gray.opacity(0.15))
         .cornerRadius(20)
     }
 }
