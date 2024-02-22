@@ -53,9 +53,13 @@ struct Result: View {
 
                     .padding(.leading, 100)
                     .padding(.trailing, 100)
-                    .padding(.bottom, 100)
                 }
             }
+            
+            Text("Through the curve above, we can understand the relationship between the number of transmissions and the accuracy of the information passed.")
+                .font(.caption)
+                .multilineTextAlignment(.leading)
+                .padding()
         }
         .padding(10)
     }

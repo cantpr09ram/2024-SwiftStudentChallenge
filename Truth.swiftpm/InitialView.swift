@@ -61,7 +61,7 @@ struct InitialView: View {
                     .resizable()
                     .scaledToFit()
                     .clipped()
-                    .frame(height: 550)
+                    .frame(height: 530)
             } else if  userMode == .img{
                 VStack {
                     //Text("Input news clip text to start game")

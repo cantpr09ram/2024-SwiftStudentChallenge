@@ -17,7 +17,12 @@ struct NewPostView: View {
     @State private var name: String = ""
 
     var body: some View {
-        VStack(spacing: 10) {
+        VStack(spacing: 8) {
+            Text("Please input the correct information as completely as possible after viewing the above photo (text) to help the next person understand the situation comprehensively.")
+                .font(.title)
+                .fontWeight(.bold)
+                .padding()
+                .multilineTextAlignment(.center)
             if num == 1 {
                 if (original.Mode == .text) {
                     Text(original.original)
@@ -30,6 +35,7 @@ struct NewPostView: View {
                         .resizable()
                         .scaledToFit()
                         .clipped()
+                        .frame(height: 500)
                 }
                 
             } else {
@@ -53,19 +59,20 @@ struct NewPostView: View {
                     Text(selectedMessange)
                 }
             }
-            HStack(alignment: .center, spacing: 10) {
+            HStack(spacing: 0) {
                 Text("\(num)")
                     .font(.title)
                     .fontWeight(.bold)
-                    .padding(10)
             }
             .padding()
 
             TextEditor(text: $messageText)
-                .frame(height: 300)
-                .padding()
+                .frame(width: 700, height: 200)
+                .padding(5)
+                .background(.gray.opacity(0.15))
                 .cornerRadius(5)
-
+            Text("The text you see might have been written by someone else, and the text you write could also be used as a reference by others.")
+                .font(.footnote)
             HStack {
                 Button("Next") {
                     let newPost = Post(num: num, name: name, messange: messageText)
@@ -89,9 +96,5 @@ struct NewPostView: View {
                 .padding()
             }
         }
-        .frame(width: 900, height: 910)
-        .padding(10)
-        .background(Color.gray.opacity(0.15))
-        .cornerRadius(20)
     }
 }

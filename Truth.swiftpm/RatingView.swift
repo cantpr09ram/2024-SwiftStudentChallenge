@@ -21,41 +21,43 @@ struct RatingView: View {
     
     var body: some View {
         VStack {
-            VStack {
-                Text("This is the article you need to review, please rate this article base on the original post below")
-                    .font(.subheadline)
-                
-                VStack {
-                    Text("Original")
-                        .font(.title3.bold())
-                        .frame(alignment: .leading)
-                    
-                    if (original.Mode == .text) {
-                        Text(original.original)
-                            .font(.body)
-                            .multilineTextAlignment(.leading)
-                            .background(Color.gray.opacity(0.2))
-                            .padding()
-                    } else {
-                        original.original_pic
-                            .resizable()
-                            .scaledToFit()
-                            .clipped()
-                    }
-                }
+            Text("The above content is assigned a score to you randomly. Determine whether there are any differences between this text and the original content, and rate accordingly.")
+                .font(.title)
+                .fontWeight(.bold)
                 .padding()
+                .multilineTextAlignment(.center)
+            VStack {
+                Text("Original")
+                    .font(.title2.bold())
+                    .frame(alignment: .leading)
+                
+                if (original.Mode == .text) {
+                    Text(original.original)
+                        .font(.body)
+                        .multilineTextAlignment(.leading)
+                        .background(Color.gray.opacity(0.2))
+                        .padding()
+                } else {
+                    original.original_pic
+                        .resizable()
+                        .scaledToFit()
+                        .clipped()
+                        .frame(height: 500)
+                }
             }
-            .padding(20)
+            .padding()
+            
             
             VStack {
-                Text("Rate the Post below base on the acc compare to original post")
+                Text("Content that needs your rating")
+                    .font(.title2.bold())
+                    .frame(alignment: .leading)
                 if (num == 0){
                     Text("Something wrong")
                     Text("\(num)")
                 }else{
                     
                     let selectedMessange = original.messanges[randomNumber ?? 0].messange
-                    Text("\(num)")
                     Text(selectedMessange)
                 }
             }
