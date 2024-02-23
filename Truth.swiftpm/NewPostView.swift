@@ -28,7 +28,6 @@ struct NewPostView: View {
                     Text(original.original)
                         .font(.body)
                         .multilineTextAlignment(.leading)
-                        .background(Color.gray.opacity(0.2))
                         .padding()
                 } else {
                     original.original_pic
@@ -59,12 +58,6 @@ struct NewPostView: View {
                     Text(selectedMessange)
                 }
             }
-            HStack(spacing: 0) {
-                Text("\(num)")
-                    .font(.title)
-                    .fontWeight(.bold)
-            }
-            .padding()
 
             TextEditor(text: $messageText)
                 .frame(width: 700, height: 200)
@@ -95,6 +88,9 @@ struct NewPostView: View {
                 .fontWeight(.bold)
                 .padding()
             }
+            Text("\(num)")
+                .font(.title)
+                .fontWeight(.bold)
         }
     }
 }
